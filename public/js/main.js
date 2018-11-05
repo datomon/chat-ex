@@ -10,11 +10,35 @@ let vm = new Vue({
         input: '',
         placeText: '請輸入你的暱稱',
         btnText: '加入聊天室',
-        users: []  //使用者列表
+        users: [],  //使用者列表
+        msgdata: [
+            { from: 'other', content: 'jfeijei', name: 'Leo'},
+            { from: 'me', content: 'aaaaeddee'},
+            { from: 'login', name: 'Mary'},
+        ]
     },
     computed: {
         userlist() {
             return this.users.sort();  //排序使用者，確保與Server端順序相同
+        },
+        msglist() {
+            if(this.msgdata) {
+                return this.msgdata.map(item => {
+                    switch(item['from']) {
+                        case 'other':
+                            return `<div class="msg_other"><div class="msgname"></div>${item['name']}<div class="msgcontent">${item['content']}</div></div>`;
+                            break;
+                        case 'me':
+                            return `<div class="msg_me"><div class="msgname">你說：</div>${item['content']}</div>`;
+                            break;
+                        case 'login':
+                            return `<div class="msg_login">${item['name']} 進入了聊天室</div>`;
+                            break;
+                    }
+                });
+            } else {
+                return [];
+            }
         }
     }, 
     methods: {
@@ -49,33 +73,35 @@ let vm = new Vue({
     mounted() {
         //連接 socket Server
         //當io()不帶入參數時，會直接去連線提供此網頁的網站伺服器
-        this.socket = io();
+        // this.socket = io();
 
-        //取得線上的使用者列表
-        this.socket.on('getUsers', res => {
-            this.users = res;
-        });
+        // //取得線上的使用者列表
+        // this.socket.on('getUsers', res => {
+        //     this.users = res;
+        // });
 
-        //與伺服器斷線時
-        this.socket.on('disconnect', () => {
-            alert('與伺服器失去連線');
-        });
+        // //與伺服器斷線時
+        // this.socket.on('disconnect', () => {
+        //     alert('與伺服器失去連線');
+        // });
 
-        //監聽是否有新人進聊天室
-        this.socket.on('NewUser', nickname => {
-            this.users.push(nickname);  //將新使用者名字加入列表中
-        });
+        // //監聽是否有新人進聊天室
+        // this.socket.on('NewUser', nickname => {
+        //     this.users.push(nickname);  //將新使用者名字加入列表中
+        // });
 
-        this.socket.on('someOneLogout', res => {
-            this.users.splice(res.idx, 1);
-            console.log(res.user + ' 離線了');
-        });
+        // this.socket.on('someOneLogout', res => {
+        //     this.users.splice(res.idx, 1);
+        //     console.log(res.user + ' 離線了');
+        // });
 
-        //監聽新的對話訊息
-        this.socket.on('newMsg', msg => {
-            console.log(msg);
-        });
+        // //監聽新的對話訊息
+        // this.socket.on('newMsg', msg => {
+        //     console.log(msg);
+        // });
     }
 })
 
-
+function getMsgHTML(obj) {
+    
+}
