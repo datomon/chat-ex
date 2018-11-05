@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聊天室 Example</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app">
+        <!-- 聊天室主場景 -->
+        <div class="sencese">
+            <!-- 上半部 -->
+            <section class="top">
+                <!-- 訊息列表 -->
+                <article class="msglist">
+                    <section class="msgitem">
+                        <div class="msgname">陳小明：</div>
+                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                    </section>
+    
+                    <section class="msgitem">
+                        <div class="msgname">陳小明：</div>
+                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                    </section>
+                    <section class="msgitem">
+                            <div class="msgname">陳小明：</div>
+                            <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                        </section>
+                        <section class="msgitem">
+                                <div class="msgname">陳小明：</div>
+                                <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                            </section>
+                            <section class="msgitem">
+                                    <div class="msgname">陳小明：</div>
+                                    <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                                </section>
+                                <section class="msgitem">
+                                        <div class="msgname">陳小明：</div>
+                                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                                    </section>
+                                    <section class="msgitem">
+                                            <div class="msgname">陳小明：</div>
+                                            <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                                        </section>
+                                        <section class="msgitem">
+                        <div class="msgname">陳小明：</div>
+                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                    </section>
+                </article>
+    
+                <!-- 線上使用者 -->
+                <article class="online">
+                    <div class="onlineheader">線上使用者</div>
+    
+                    <ul class="users">
+                        <li v-for="(item, idx) in userlist">
+                            <i class="fas fa-user faicon"></i>{{ item }}
+                        </li>
+                    </ul>
+                </article>
+            </section>
+                
+            <!-- 表情區 -->
+            <section class="faces">
+    
+            </section>
+    
+            <!-- 訊息輸入區 -->
+            <section class="msgarea">
+                <!-- form綁定@submit.prevent事件，做出輸入完後直接按Enter也能送出訊息，而且不會reload-->
+                <form name="msgform" @submit.prevent="submit">
+                    <input type="text" class="msginput" v-model.trim="input" :placeholder="placeText">
+                    <button type="button" class="msgbtn" @click.prevent="submit">
+                        <i class="fas fa-microphone-alt faicon"></i>{{ btnText }}
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+    
+
+    <!-- vus.js -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'></script>
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- 泡泡背景 -->
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+    <script src="js/pubbly.js"></script>
+    <!-- 主要的js -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+@charset "utf-8";
+html, body, ul, li {
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+}
+body {
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* 輸入暱稱的頁面 */
+.askname {
+    width: 500px;
+    height: 60px;
+    background-color: #fff;
+}
+
+
+
+/* 正中主場景 */
+.sencese {
+    position: relative;
+    width: 1000px;
+    height: 700px;
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid rgba(0, 0, 0, .3);
+}
+
+/* 上半部 */
+.top {
+    width: 100%;
+    height: 500px;
+    background-color: #a1eba0;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, .4);
+    display: flex;
+    border-radius: 8px 8px 0 0
+}
+
+/* 訊息列表、線上使用者 */
+.msglist, .online {
+    height: 100%;
+    background-color: white;
+}
+.msglist {
+    flex: 4;
+    border-right: 1px solid rgba(0, 0, 0, .4);
+    padding: 15px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.online {
+    flex: 1;
+}
+.msgitem {
+    margin-bottom: 24px;
+}
+.msgname{
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.msgcontent{
+    padding-left: 20px;
+}
+.onlineheader {
+    background-color: #616161;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    letter-spacing: 2px;
+    line-height: 30px;
+}
+
+/* 使用者列表 */
+.users {
+    list-style-type: none;
+}
+.users li {
+    margin-top: 8px;
+    padding-left: 15px;
+}
+
+
+/* fontawesome icon */
+.faicon {
+    margin-right: 8px;
+}
+
+/* 訊息輸入區 */
+.msgarea {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #F1F1F1;
+    padding: 15px;
+    border-top: 1px solid rgba(0, 0, 0, .4);
+}
+
+/* 訊息輸入欄、送出按鈕*/
+.msginput, .msgbtn {
+    height: 50px;
+    border-radius: 8px;
+    font-size: 20px;
+    line-height: 20px;
+    border-width: 2px;
+    border-style: solid;
+}
+.msginput {
+    width: 780px;
+    padding-left: 15px;
+    border-color: #ffaad5;
+    margin-right: 10px;
+}
+.msgbtn {
+    width: 150px;
+    background-color: #ffc78e;
+    border-color: #ff9224;
+    cursor: pointer;
+    transition: all .5s;
+}
+.msgbtn:hover {
+    background-color: #ff9224;
+    border-color: #bb3d00;
+}
+.msginput:focus, .msgbtn:focus {
+    outline: none;  /*取消輸入欄點擊時預設外框*/
+}
+/* 字體設定 */
+.msginput, .msgbtn, .onlineheader, .users {
+    font-family: 微軟正黑體, arial, sans-serif;
+}
+
+/*捲軸樣式*/
+::-webkit-scrollbar {  /*寬度*/
+    width: 10px;
+}
+::-webkit-scrollbar-track {  /*進度條*/
+    background: #dbdada; 
+}
+::-webkit-scrollbar-thumb {  /*bar顏色*/
+    background: rgb(172, 205, 255); 
+}
+::-webkit-scrollbar-thumb:hover {  /*滑鼠移入時顏色*/
+    background: rgb(130, 177, 248); 
+}

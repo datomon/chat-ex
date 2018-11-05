@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/datomon/chat-ex/issues"
   },
-  "homepage": "https://github.com/datomon/chat-ex#readme"
+  "homepage": "https://github.com/datomon/chat-ex#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1"
+  }
 }
