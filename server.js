@@ -25,29 +25,27 @@ io.on('connection', socket => {
 
     //---- 監聽第一次登入時，傳來的暱稱 ----
     socket.on('FirstLogin', nickname => {
-        if(nickname) {
-            //核對暱稱是否已被使用
-            $hasName = userlist.find(item => {
-                return nickname === item;
-            });
+        //核對暱稱是否已被使用
+        $hasName = userlist.find(item => {
+            return nickname === item;
+        });
 
-            //假如有找到就回傳錯誤
-            if($hasName) {
-                socket.emit('LoginSuccess', { success: false });
+        //假如有找到就回傳錯誤
+        if($hasName) {
+            socket.emit('LoginFalse', { success: false });
 
-            } else {
-                socket.username = nickname;  //將暱稱存到這次連線的自訂屬性 username 中
-                userlist.push(nickname);  //將暱稱加到使用者列表
-                userlist.sort();  //排序列表
+        } else {
+            socket.username = nickname;  //將暱稱存到這次連線的自訂屬性 username 中
+            userlist.push(nickname);  //將暱稱加到使用者列表
+            userlist.sort();  //排序列表
 
-                //向client端的「LoginSuccess」事件傳送成功訊息
-                socket.emit('LoginSuccess', { success: true });
+            //向client端的「LoginSuccess」事件傳送成功訊息
+            socket.emit('LoginSuccess', { success: true });
 
-                //用廣播的方式(自己以外的人都會收到)，告訴所有人新的使用者名字
-                socket.broadcast.emit('NewUser', nickname);
+            //用廣播的方式(自己以外的人都會收到)，告訴所有人新的使用者名字
+            socket.broadcast.emit('NewUser', nickname);
 
-                console.log(`${socket.username} 進入聊天室(${new Date().toLocaleString()})`);
-            }
+            console.log(`${socket.username} 進入聊天室(${new Date().toLocaleString()})`);
         }
     });
     
@@ -61,12 +59,14 @@ io.on('connection', socket => {
             
             userlist.splice(idx, 1);  //移除該使用者
 
-            //廣播說有人離線及該使用者的資料
-            socket.broadcast.emit('someOneLogout', {
-                idx: idx,
-                user: socket.username
-            });
-
+            //若還有登入中的使用者，廣播說有人離線及該使用者的資料
+            if(userlist.length > 0) {
+                socket.broadcast.emit('someOneLogout', {
+                    idx: idx,
+                    user: socket.username
+                });
+            }
+            
             console.log(`${socket.username} 已離線(${new Date().toLocaleString()})`);
         }
     });

@@ -7,6 +7,12 @@
     <title>聊天室 Example</title>
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- vus.js -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'></script>
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- 泡泡背景 -->
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
 </head>
 <body>
     <div id="app">
@@ -15,39 +21,16 @@
             <!-- 上半部 -->
             <section class="top">
                 <!-- 訊息列表 -->
-                <article class="msglist">
-                    <section class="msgitem">
-                        <div class="msgname">陳小明：</div>
-                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                    </section>
-    
-                    <section class="msgitem">
-                        <div class="msgname">陳小明：</div>
-                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                    </section>
-                    <section class="msgitem">
-                            <div class="msgname">陳小明：</div>
-                            <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                        </section>
-                        <section class="msgitem">
-                                <div class="msgname">陳小明：</div>
-                                <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                            </section>
-                            <section class="msgitem">
-                                    <div class="msgname">陳小明：</div>
-                                    <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                                </section>
-                                <section class="msgitem">
-                                        <div class="msgname">陳小明：</div>
-                                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                                    </section>
-                                    <section class="msgitem">
-                                            <div class="msgname">陳小明：</div>
-                                            <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
-                                        </section>
-                                        <section class="msgitem">
-                        <div class="msgname">陳小明：</div>
-                        <div class="msgcontent">hi、hi~安安、幾歲、住哪?</div>
+                <article class="msglist" ref="msglist">
+                    <section 
+                        v-for="(msg, idx) in msglist" 
+                        :class="(msg.from == 'other')? 'msg_other': 
+                                (msg.from == 'me')? 'msg_me': 
+                                (msg.from == 'login')? 'msg_login' : 'msg_logout'" 
+                        :key="idx"
+                    >
+                        <div class="msgname">[ {{ msg.name }} ]</div>
+                        <div class="msgcontent">{{ msg.content }}</div>
                     </section>
                 </article>
     
@@ -55,7 +38,7 @@
                 <article class="online">
                     <div class="onlineheader">線上使用者</div>
     
-                    <ul class="users">
+                    <ul class="users" ref="users">
                         <li v-for="(item, idx) in userlist">
                             <i class="fas fa-user faicon"></i>{{ item }}
                         </li>
@@ -81,13 +64,6 @@
         </div>
     </div>
     
-
-    <!-- vus.js -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'></script>
-    <!-- socket.io -->
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <!-- 泡泡背景 -->
-    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
     <script src="js/pubbly.js"></script>
     <!-- 主要的js -->
     <script src="js/main.js"></script>

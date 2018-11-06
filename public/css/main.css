@@ -56,7 +56,7 @@ body {
 .msglist {
     flex: 4;
     border-right: 1px solid rgba(0, 0, 0, .4);
-    padding: 15px;
+    padding: 0 15px;
     overflow-x:hidden;
     overflow-y:auto;
 }
@@ -64,26 +64,45 @@ body {
 .online {
     flex: 1;
 }
-.msg_other {  /*其他人的訊息*/
-    margin-bottom: 24px;
+.msg_other, .msg_me {  /*其他人、自己的訊息*/
+    width: 100%;
+    word-break: break-all;  /*文字換行*/
+    background-color: #e9e5e5;
+    border-bottom: 2px solid white;
+    padding: 8px;
+}
+.msg_me {  /*自己發出的訊息*/
+    color: rgb(49, 155, 63);
 }
 .msgname{
-    margin-bottom: 4px;
+    padding-bottom: 4px;
     font-weight: bold;
 }
 .msgcontent{
     padding-left: 20px;
 }
-.msg_login {  /*有人登入的訊息*/
+.msg_login, .msg_logout {  /*有人登入、登出的訊息*/
     width: 100%;
     text-align: center;
     color: red;
     padding: 15px;
 }
-.msg_me {  /*自己發出的訊息*/
-    text-align: right;
-    width: 100%;
-    padding: 15px;
+.msg_login > .msgname::before,
+.msg_logout > .msgname::before
+{
+    content: '= = = = = = = = = = = = = = = = = ';
+}
+.msg_login > .msgname::after {
+    content: ' 進入了聊天室 = = = = = = = = = = = = = = = = =';
+}
+.msg_logout > .msgname::after {
+    content: ' 離開了聊天室 = = = = = = = = = = = = = = = = =';
+}
+.msg_logout {
+    color: blue;
+}
+.msg_login > .msgcontent, .msg_logout > .msgcontent {
+    display: none;
 }
 .onlineheader {
     background-color: #616161;
