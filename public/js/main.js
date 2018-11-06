@@ -27,9 +27,7 @@ let vm = new Vue({
 
                 //把你輸入的訊息加到自己的訊息列表中
                 this.msglist.push({ from: 'me', content:this.input, name: '你'});
-                
-                //將捲軸拉到最新的訊息
-                this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
+
                 this.input = '';  //清空輸入欄位
             } else {
                 //初次輸入訊息時，是送出暱稱做登入
@@ -57,9 +55,6 @@ let vm = new Vue({
             //有人進聊天室的訊息
             this.msglist.push({ from: 'login', content: null, name: nickname});
             this.users.push(nickname);  //將新使用者名字加入列表中
-
-            //將捲軸拉到最新的訊息
-            this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
         });
 
         //監聽是否有人離線
@@ -70,9 +65,6 @@ let vm = new Vue({
 
                     //有人進聊天室的訊息
                     this.msglist.push({ from: 'logout', content: null, name: res.user});
-
-                    //將捲軸拉到最新的訊息
-                    this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
                 }
             }
         });
@@ -81,9 +73,6 @@ let vm = new Vue({
         this.socket.on('newMsg', msg => {
             if(this.nickname) {  //有加入聊天才看的到訊息
                 this.msglist.push({ from: 'other', content: msg.content, name: msg.name});
-
-                //將捲軸拉到最新的訊息
-                this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
             }
         });
 
@@ -105,5 +94,10 @@ let vm = new Vue({
             this.msglist.push({ from: 'other', content: '這個暱稱已有人使用，請換一個!', name: '系統'});
             this.input = '';
         });
+    },
+    updated() {
+        //將捲軸拉到最新的訊息
+        //因為訊息列表是用 data 去 render，所以要等 re-render 頁面後，才計算的到正確高度
+        this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
     }
 });
