@@ -10,8 +10,10 @@ let vm = new Vue({
         msglist: [{  //訊息列表
                 from: 'other', 
                 content: '歡迎~進入聊天室才看的到別人說什麼，快輸入你的暱稱跟大家一起聊聊天吧!',
-                name: '系統'
-                }]
+                name: '系統',
+                img: false
+                }],
+        imgName: ['1.png', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],  //貼圖名稱
     },
     computed: {
         userlist() {
@@ -26,12 +28,20 @@ let vm = new Vue({
                 this.socket.emit('ClinetPushMsg', { content:this.input, name: this.nickname});
 
                 //把你輸入的訊息加到自己的訊息列表中
-                this.msglist.push({ from: 'me', content:this.input, name: '你'});
+                this.msglist.push({ from: 'me', content:this.input, name: '你', img: false});
 
                 this.input = '';  //清空輸入欄位
             } else {
                 //初次輸入訊息時，是送出暱稱做登入
                 this.socket.emit('FirstLogin', this.input);
+            }
+        },
+        addImg(n) {
+            if(this.nickname) {
+                this.socket.emit('pushImg', { img: n, name: this.nickname});
+
+                //把你輸入的訊息加到自己的訊息列表中
+                this.msglist.push({ from: 'me', content: '', name: '你', img: n});
             }
         }
     },
@@ -53,7 +63,7 @@ let vm = new Vue({
         //監聽是否有新人進聊天室
         this.socket.on('NewUser', nickname => {
             //有人進聊天室的訊息
-            this.msglist.push({ from: 'login', content: null, name: nickname});
+            this.msglist.push({ from: 'login', content: '', name: nickname, img: false});
             this.users.push(nickname);  //將新使用者名字加入列表中
         });
 
@@ -64,7 +74,7 @@ let vm = new Vue({
                     this.users.splice(res.idx, 1);
 
                     //有人進聊天室的訊息
-                    this.msglist.push({ from: 'logout', content: null, name: res.user});
+                    this.msglist.push({ from: 'logout', content: '', name: res.user, img: false});
                 }
             }
         });
@@ -72,7 +82,14 @@ let vm = new Vue({
         //監聽其他人發出的對話訊息
         this.socket.on('newMsg', msg => {
             if(this.nickname) {  //有加入聊天才看的到訊息
-                this.msglist.push({ from: 'other', content: msg.content, name: msg.name});
+                this.msglist.push({ from: 'other', content: msg.content, name: msg.name, img: false});
+            }
+        });
+
+        //監聽其他人發出的貼圖
+        this.socket.on('newImg', msg => {
+            if(this.nickname) {  //有加入聊天才看的到訊息
+                this.msglist.push({ from: 'other', content: '', name: msg.name, img: msg.img});
             }
         });
 
@@ -91,7 +108,7 @@ let vm = new Vue({
         //監聽登入失敗訊息
         this.socket.on('LoginFalse', res => {
             //暱稱已有人使用
-            this.msglist.push({ from: 'other', content: '這個暱稱已有人使用，請換一個!', name: '系統'});
+            this.msglist.push({ from: 'other', content: '這個暱稱已有人使用，請換一個!', name: '系統', img: false});
             this.input = '';
         });
     },

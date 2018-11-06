@@ -32,7 +32,7 @@ io.on('connection', socket => {
 
         //假如有找到就回傳錯誤
         if($hasName) {
-            socket.emit('LoginFalse', { success: false });
+            socket.emit('LoginFalse', { error: '名稱重覆' });
 
         } else {
             socket.username = nickname;  //將暱稱存到這次連線的自訂屬性 username 中
@@ -77,7 +77,10 @@ io.on('connection', socket => {
         socket.broadcast.emit('newMsg', msg);
     });
 
-    
+    //---- 監聽 client 端的新增貼圖 ----
+    socket.on('pushImg', msg => {
+        socket.broadcast.emit('newImg', msg);
+    });
 });
 
 http.listen(3000, () => {

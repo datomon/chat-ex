@@ -30,7 +30,10 @@
                         :key="idx"
                     >
                         <div class="msgname">[ {{ msg.name }} ]</div>
-                        <div class="msgcontent">{{ msg.content }}</div>
+                        <div class="msgcontent">
+                            {{ msg.content }}
+                            <img :src="`image/${msg.img}.png`" v-if="msg.img">
+                        </div>
                     </section>
                 </article>
     
@@ -48,7 +51,7 @@
                 
             <!-- 表情區 -->
             <section class="faces">
-    
+                <img :src="`image/${n}.png`" v-for="n in 12" @click="addImg(n)">
             </section>
     
             <!-- 訊息輸入區 -->
