@@ -8,18 +8,26 @@ let vm = new Vue({
         btnText: '加入聊天室',
         users: [],  //使用者列表
         msglist: [{  //訊息列表
-                from: 'other', 
-                content: '歡迎~進入聊天室才看的到別人說什麼，快輸入你的暱稱跟大家一起聊聊天吧!',
-                name: '系統',
-                img: false
-                }],
-        imgName: ['1.png', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],  //貼圖名稱
+                    from: 'other', 
+                    content: '歡迎~進入聊天室才看的到別人說什麼，快輸入你的暱稱跟大家一起聊聊天吧!',
+                    name: '系統',
+                    img: false
+                }]
     },
     computed: {
         userlist() {
             return this.users.sort();  //排序使用者，確保與Server端順序相同
         }
-    }, 
+    },
+    watch: {
+        msglist() {
+            //將捲軸拉到最新的訊息，用 $nextTick 等 DOM 改變完再做動作
+            //因為訊息列表是用 data 去 render，所以要等 re-render 頁面後，才計算的到正確高度
+            this.$nextTick(() => {
+                this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
+            })
+        }
+    },
     methods: {
         submit() {
             if(this.nickname) {
@@ -123,10 +131,5 @@ let vm = new Vue({
             );
             this.input = '';
         });
-    },
-    updated() {
-        //將捲軸拉到最新的訊息
-        //因為訊息列表是用 data 去 render，所以要等 re-render 頁面後，才計算的到正確高度
-        this.$refs.msglist.scrollTop = this.$refs.msglist.scrollHeight;
     }
 });

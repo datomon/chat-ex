@@ -102,11 +102,7 @@ body {
 .msg_login > .msgcontent, .msg_logout > .msgcontent {
     display: none;
 }
-.msgcontent > img {
-    /* 圖片改為區塊，讓訊息區re-render時，高度算的更精準，捲軸能確保到最底 */
-    /* 對 safari 瀏覽器依然無解 */
-    display: block;
-}
+
 
 /* 使用者列表 */
 .onlineheader {

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <!-- vus.js -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.min.js"></script>
     <!-- socket.io -->
     <script src="/socket.io/socket.io.js"></script>
     <!-- 泡泡背景 -->
@@ -30,10 +30,10 @@
                         :key="idx"
                     >
                         <div class="msgname">[ {{ msg.name }} ]</div>
-                        <div class="msgcontent">
-                            {{ msg.content }}
-                            <img :src="`image/${msg.img}.png`" v-if="msg.img">
+                        <div class="msgcontent" v-if="!msg.img">
+                            {{ msg.content }} 
                         </div>
+                        <img :src="`image/${msg.img}.png`" v-if="msg.img">
                     </section>
                 </article>
     
