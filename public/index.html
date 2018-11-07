@@ -33,7 +33,7 @@
                         <div class="msgcontent" v-if="!msg.img">
                             {{ msg.content }} 
                         </div>
-                        <img :src="`image/${msg.img}.png`" v-if="msg.img">
+                        <img :src="msg.img" width="100" height="100" v-if="msg.img">
                     </section>
                 </article>
     
@@ -51,7 +51,29 @@
                 
             <!-- 表情區 -->
             <section class="faces">
-                <img :src="`image/${n}.png`" v-for="n in 12" @click="addImg(n)">
+                <div class="uploadarea">
+                    <form name="fileform">
+                        <input type="file" name="uploadfile" @change="selectfile">
+                        <img src="image/upload.png" width="95" height="95" 
+                            v-if="fileuploadImg"
+                            @click="upload"
+                        >
+                        <img width="100" height="100" 
+                            v-if="uploadImgsrc" 
+                            :src="uploadImgsrc" 
+                            @click="addImg(uploadImgsrc)"
+                        >
+                    </form>
+                    <a class="changebtn" href="javascript:;"
+                        @click="upload" 
+                        v-if="uploadImgsrc"
+                    >更換圖片</a>
+                </div>
+
+                <img :src="img"  
+                    v-for="img in imglist" 
+                    @click="addImg(img)"
+                >
             </section>
     
             <!-- 訊息輸入區 -->

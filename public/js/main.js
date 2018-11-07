@@ -12,7 +12,10 @@ let vm = new Vue({
                     content: '歡迎~進入聊天室才看的到別人說什麼，快輸入你的暱稱跟大家一起聊聊天吧!',
                     name: '系統',
                     img: false
-                }]
+                }],
+        imglist: ['image/1.png', 'image/2.png', 'image/3.png', 'image/4.png', 'image/5.png', 'image/6.png', 'image/7.png', 'image/8.png', 'image/9.png', 'image/10.png', 'image/11.png', 'image/12.png'],
+        fileuploadImg: true,
+        uploadImgsrc: ''
     },
     computed: {
         userlist() {
@@ -44,15 +47,34 @@ let vm = new Vue({
                 this.socket.emit('FirstLogin', this.input);
             }
         },
-        addImg(n) {
+        addImg(img) {
             if(this.nickname) {
-                this.socket.emit('pushImg', { img: n, name: this.nickname });
+                this.socket.emit('pushImg', { img: img, name: this.nickname });
 
                 //把你輸入的訊息加到自己的訊息列表中
                 this.msglist.push(
-                    { from: 'me', content: '', name: '你', img: n }
+                    { from: 'me', content: '', name: '你', img: img }
                 );
             }
+        },
+        upload() {
+            if(confirm('貼圖上傳時會縮小為 100 x 100 的圖片，ok嗎?')) {
+                fileform.uploadfile.click();  //觸發file input的點擊事件
+            }
+        },
+        selectfile(e) {
+            let file = e.target.files.item(0);
+            let reader = new FileReader;  //新增一個檔案讀取器的實例
+
+            //讓讀取器開始偵聽一個 load(讀取事件)，結束後就執行 vue 的 imgLoaded 方法
+            reader.addEventListener('load', this.imgLoaded);
+
+            //用讀取器讀取上傳的圖片，轉成base64網址(用網址就能看到圖)
+            reader.readAsDataURL(file);
+        },
+        imgLoaded(e) {
+            this.uploadImgsrc = e.target.result;  //指派已上傳圖片的src
+            this.fileuploadImg = false;  //隱藏初始的上傳按鈕圖
         }
     },
     mounted() {

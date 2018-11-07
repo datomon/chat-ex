@@ -201,3 +201,30 @@ body {
     margin: auto 0 auto 15px;
     cursor: pointer;
 }
+.uploadarea {
+    flex: 1;
+    height: 100%;
+    border-right: 1px solid #999497;
+    text-align: center;
+    position: relative;
+    padding-top: 2px;
+}
+.uploadarea img {
+    cursor: pointer;
+}
+.uploadarea input {
+    /* 讓input消失，點擊動作只能透過圖片 */
+    display: none;
+}
+.changebtn {
+    padding: 2px 8px;
+    position: absolute;
+    bottom: 4px;
+    left: 10px;
+    background-color: rgb(243, 21, 21);
+    border-radius: 5px;
+    text-decoration: none;
+}
+.changebtn, .changebtn:active, .changebtn:hover {
+    color: white;
+}
