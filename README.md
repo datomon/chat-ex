@@ -9,7 +9,7 @@ npm install
 node server.js
 
 (3)用瀏覽器連線：
-http://localhost:3000
+http://127.0.0.1:8080
 
 ## 泡泡背景
 它是個很簡單易設定的套件，顏色都可以自己調整： https://github.com/tipsy/bubbly-bg 
