@@ -83,6 +83,10 @@ io.on('connection', socket => {
     });
 });
 
-http.listen(8080, '127.0.0.1', () => {
-    console.log('listening on *:8080');
+//openshift IP、Port
+let server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+let server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+
+http.listen(server_port, server_ip_address, () => {
+    console.log("Listening on： " + server_ip_address + ", port：" + server_port);
 });
