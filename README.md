@@ -6,7 +6,7 @@
 npm install
 
 (2)啟動 socket server：
-node server.js
+npm run start 或是 node server.js
 
 (3)用瀏覽器連線：
 http://127.0.0.1:8080
